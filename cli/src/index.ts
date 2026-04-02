@@ -154,6 +154,12 @@ auth
 
 registerClientAuthCommands(auth);
 
+// Default to "run" when invoked with no subcommand (e.g. Railway deployment)
+const args = process.argv.slice(2);
+if (args.length === 0 || (args.every((a) => a.startsWith("-")) && !args.includes("--help") && !args.includes("-h") && !args.includes("--version") && !args.includes("-V"))) {
+  process.argv.splice(2, 0, "run");
+}
+
 program.parseAsync().catch((err) => {
   console.error(err instanceof Error ? err.message : String(err));
   process.exit(1);
