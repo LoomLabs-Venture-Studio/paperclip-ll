@@ -140,6 +140,7 @@ async function ensureEmbeddedPostgresConnection(
     password: "paperclip",
     port: selectedPort,
     persistent: true,
+    createPostgresUser: process.getuid?.() === 0,
     initdbFlags: ["--encoding=UTF8", "--locale=C", "--lc-messages=C"],
     onLog: logBuffer.append,
     onError: logBuffer.append,
